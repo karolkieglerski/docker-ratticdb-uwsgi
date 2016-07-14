@@ -1,25 +1,5 @@
 set -e
 
-if [[ -z "$POSTGRES_PORT_5432_TCP_ADDR" ]]; then
-  echo '$POSTGRES_PORT_5432_TCP_ADDR not defined. Aborting...' >&2
-  exit 1
-fi
-
-if [[ -z "$POSTGRES_PORT_5432_TCP_PORT" ]]; then
-  echo '$POSTGRES_PORT_5432_TCP_PORT not defined. Aborting...' >&2
-  exit 1
-fi
-
-if [[ -z "$POSTGRES_ENV_POSTGRES_USER" ]]; then
-  echo '$POSTGRES_ENV_POSTGRES_USER not defined. Aborting...' >&2
-  exit 1
-fi
-
-if [[ -z "$POSTGRES_ENV_POSTGRES_PASSWORD" ]]; then
-  echo '$POSTGRES_ENV_POSTGRES_PASSWORD not defined. Aborting...' >&2
-  exit 1
-fi
-
 database_host="$POSTGRES_PORT_5432_TCP_ADDR"
 database_port="$POSTGRES_PORT_5432_TCP_PORT"
 database_user="$POSTGRES_ENV_POSTGRES_USER"

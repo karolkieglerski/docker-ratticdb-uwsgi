@@ -18,7 +18,8 @@ apt-get install -y --no-install-recommends \
   libxslt-dev \
   python-pip \
   python2.7 \
-  python2.7-dev
+  python2.7-dev \
+  libmysqlclient-dev
 
 curl -L 'https://github.com/tildaslash/RatticWeb/archive/v1.3.1.tar.gz' \
   -o rattic.tar.gz
@@ -31,8 +32,8 @@ tar -xvf "$HOME/rattic.tar.gz" \
 
 rm -fv "$HOME/rattic.tar.gz"
 
-pip install -r /srv/rattic/requirements-pgsql.txt
-pip install jinja2 uwsgi
+pip install -r /srv/rattic/requirements-mysql.txt
+pip install jinja2 uwsgi mysql-python
 
 apt-get purge -y \
   build-essential \
