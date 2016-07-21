@@ -88,6 +88,42 @@ from_email = $EMAIL_FROM
 EOF
 fi
 
+if [[ -n "$LDAP_DOMAIN" && -n "$LDAP_USER" && -n "$LDAP_PASS" && -n "$LDAP_USER_BASE" && -n "$LDAP_USER_FILTER" ]]; then
+  if [[ -z "$LDAP_LOG" ]]; then
+    LDAP_TYPE="DEBUG"
+  fi
+  if [[ -z "$LDAP_GROUP_BASE" ]]; then
+    LDAP_GROUP_BASE="$LDAP_USER_BASE"
+  fi
+  if [[ -z "$LDAP_TYPE" ]]; then
+    LDAP_TYPE="ActiveDirectoryGroupType"
+  fi
+  if [[ -z "$LDAP_GROUP_FILTER" ]]; then
+    LDAP_GROUP_FILTER="(objectClass=group)"
+  fi
+  if [[ -z "$LDAP_STAFF" ]]; then
+    LDAP_STAFF="$LDAP_GROUP_BASE"
+  fi
+
+  cat >> "$localconf_path" <<EOF
+
+[ldap]
+loglevel = $LDAP_LOG
+uri = ldap://$LDAP_DOMAIN
+
+binddn = $LDAP_USER
+bindpw = $LDAP_PASS
+
+userbase = $LDAP_USER_BASE
+userfilter = $LDAP_USER_FILTER
+
+groupbase = $LDAP_GROUP_BASE
+groupfilter = $LDAP_GROUP_FILTER
+grouptype = $LDAP_TYPE
+staff = $LDAP_STAFF
+EOF
+fi
+
 if [[ "$1" == 'migrate' ]]; then
   sleep 10
   $python manage.py migrate --all
